@@ -1,16 +1,26 @@
 import AnimalModelMemory from "./DAO/AnimalModelMemory.js";
 import AnimalModelMongo from "./DAO/AnimalModelMongo.js";
+import VeterinarioModelMemory from "./DAO/VeterinarioModelMemory.js";
+import VeterinarioModelMongo from "./DAO/VeterinarioModelMongo.js";
 
 class Factory {
-  static get(persistence, mongoDB) {
-    switch (persistence) {
-      case "mongo":
-        console.log("MongoDB persistencia");
-        return new AnimalModelMongo(mongoDB);
-      case "memory":
+  static get(model, mongoDB) {
+    const persistence = process.env.PERSISTENCE || 'memory';
+    switch (model) {
+      case "animal":
+        if (persistence === "mongo") {
+          return new AnimalModelMongo(mongoDB);
+        } else {
+          return new AnimalModelMemory();
+        }
+      case "veterinario":
+        if (persistence === "mongo") {
+          return new VeterinarioModelMongo(mongoDB);
+        } else {
+          return new VeterinarioModelMemory();
+        }
       default:
-        console.log("Memory persistencia");
-        return new AnimalModelMemory();
+        throw new Error("Modelo no soportado");
     }
   }
 }

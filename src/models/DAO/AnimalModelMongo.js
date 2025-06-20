@@ -40,13 +40,11 @@ class AnimalModelMongo {
   }
 
   async getAnimalesByEspecie(especie) {
-    const data = await this.db.collection("animales").find({ especie }).toArray();
-    return data;
+    return this.db.collection("animales").find({ especie }).toArray();
   }
 
   async getAnimalesByEstado(estado) {
-    const data = await this.db.collection("animales").find({ estado }).toArray();
-    return data;
+    return this.db.collection("animales").find({ estado }).toArray();
   }
 }
 

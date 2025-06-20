@@ -7,4 +7,16 @@ const animalSchema = Joi.object({
   estado: Joi.string().min(3).required(),
 });
 
-export default { animalSchema };
+const veterinarioSchema = Joi.object({
+  nombre: Joi.string().min(2).required(),
+  matricula: Joi.string().min(2).required(),
+  especialidad: Joi.string().min(2).required(),
+});
+
+export function validateAnimal(data) {
+  return animalSchema.validate(data);
+}
+
+export function validateVeterinario(data) {
+  return veterinarioSchema.validate(data);
+}

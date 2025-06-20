@@ -1,5 +1,6 @@
 import express from "express";
 import AnimalRouter from "./routes/AnimalRoutes.js";
+import VeterinarioRouter from "./routes/VeterinarioRoutes.js";
 import dotenv from "dotenv";
 import MongoConnection from "./models/MongoConnection.js";
 
@@ -17,6 +18,7 @@ const PORT = process.env.PORT || 3000;
     app.use(express.urlencoded({ extended: true }));
 
     app.use("/api", new AnimalRouter().startRoutes());
+    app.use("/api", new VeterinarioRouter().startRoutes());
 
     app.use((req, res) => {
       res.status(404).json({

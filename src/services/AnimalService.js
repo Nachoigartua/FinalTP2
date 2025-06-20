@@ -1,9 +1,9 @@
-import validation from "../utils/validation.js";
+import { validateAnimal } from "../utils/validation.js";
 import Factory from "../models/Factory.js";
 
 class AnimalService {
   constructor() {
-    this.model = Factory.get(process.env.PERSISTENCE);
+    this.model = Factory.get("animal");
   }
 
   getAnimales = async () => {
@@ -12,9 +12,9 @@ class AnimalService {
   };
 
   postAnimal = async (animal) => {
-    const validateAnimal = validation.animalSchema.validate(animal);
-    if (validateAnimal.error) {
-      return "Error: " + validateAnimal.error;
+    const { error } = validateAnimal(animal);
+    if (error) {
+      return "Error: " + error;
     } else {
       const postAnimal = await this.model.postAnimal(animal);
       return postAnimal;
