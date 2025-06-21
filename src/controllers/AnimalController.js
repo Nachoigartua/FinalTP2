@@ -60,28 +60,6 @@ class AnimalController {
       res.status(500).send({ error: "Error al eliminar animal" });
     }
   };
-
-  getPorEspecie = async (req, res) => {
-    try {
-      const { especie } = req.params;
-      const data = await this.service.getAnimalesByEspecie(especie);
-      res.status(200).json(data);
-    } catch (error) {
-      console.error("Error en getPorEspecie:", error);
-      res.status(500).json({ error: "Error fetching animales by especie" });
-    }
-  };
-
-  getPorEstado = async (req, res) => {
-    try {
-      const { estado } = req.params;
-      const data = await this.service.getAnimalesByEstado(estado);
-      res.status(200).json(data);
-    } catch (error) {
-      console.error("Error en getPorEstado:", error);
-      res.status(500).json({ error: "Error fetching animales by estado" });
-    }
-  };
 }
 
 export default AnimalController;

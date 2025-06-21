@@ -10,7 +10,7 @@ class MongoConnection {
         }
         this.client = new MongoClient(process.env.MONGO_URL);
         await this.client.connect();
-        this.db = this.client.db(process.env.MONGO_DB_NAME || "tp2");
+        this.db = this.client.db(process.env.MONGO_DB_NAME);
     }
 }
 

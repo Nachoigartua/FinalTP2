@@ -3,7 +3,7 @@ import Factory from "../models/Factory.js";
 
 class VeterinarioService {
   constructor() {
-    this.model = Factory.get("veterinario");
+    this.model = Factory.get("veterinario", process.env.PERSISTENCE);
   }
 
   getVeterinarios = async () => {
@@ -12,42 +12,22 @@ class VeterinarioService {
   };
 
   postVeterinario = async (veterinario) => {
-    const { error } = validateVeterinario(veterinario);
-    if (error) {
-      return "Error: " + error;
+    const validate = validateVeterinario(veterinario);
+    if (validate.error) {
+      return "Error: " + validate.error;
+    } else {
+      const postVeterinario = await this.model.postVeterinario(veterinario);
+      return postVeterinario;
     }
-    // Validar que la matrícula no esté repetida
-    const todos = await this.getVeterinarios();
-    if (todos.some((v) => v.matricula === veterinario.matricula)) {
-      return "Error: La matrícula ya existe";
-    }
-    const postVeterinario = await this.model.postVeterinario(veterinario);
-    return postVeterinario;
   };
 
   putVeterinario = async (id, data) => {
-    // Validar que la matrícula no esté repetida (excepto para el mismo veterinario)
-    const todos = await this.getVeterinarios();
-    if (
-      data.matricula &&
-      todos.some((v) => v.matricula === data.matricula && v._id != id)
-    ) {
-      return "Error: La matrícula ya existe";
-    }
-    const updatedVeterinario = await this.model.putVeterinario(id, data);
-    return updatedVeterinario;
+    const putVeterinario = await this.model.putVeterinario(id, data);
+    return putVeterinario;
   };
 
-  patchVeterinario = async (id, update) => {
-    // Validar que la matrícula no esté repetida (excepto para el mismo veterinario)
-    const todos = await this.getVeterinarios();
-    if (
-      update.matricula &&
-      todos.some((v) => v.matricula === update.matricula && v._id != id)
-    ) {
-      return "Error: La matrícula ya existe";
-    }
-    const patchVeterinario = await this.model.patchVeterinario(id, update);
+  patchVeterinario = async (id, data) => {
+    const patchVeterinario = await this.model.patchVeterinario(id, data);
     return patchVeterinario;
   };
 

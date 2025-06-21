@@ -38,14 +38,6 @@ class AnimalModelMongo {
     );
     return usrDelete;
   }
-
-  async getAnimalesByEspecie(especie) {
-    return this.db.collection("animales").find({ especie }).toArray();
-  }
-
-  async getAnimalesByEstado(estado) {
-    return this.db.collection("animales").find({ estado }).toArray();
-  }
 }
 
 export default AnimalModelMongo;

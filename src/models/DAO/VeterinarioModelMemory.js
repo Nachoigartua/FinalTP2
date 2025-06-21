@@ -1,66 +1,72 @@
 class VeterinarioModelMemory {
   constructor() {
-    this.veterinarios = [];
-    this.currentId = 1;
+    this.veterinarios = [
+    ];
   }
 
-  async getVeterinarios() {
+  getVeterinarios = async () => {
     return this.veterinarios;
-  }
+  };
 
-  async postVeterinario(veterinario) {
-    // Validar que la matrícula no esté repetida
-    if (this.veterinarios.some(v => v.matricula === veterinario.matricula)) {
+  postVeterinario = async veterinario => {
+    const veterinarios = await this.getVeterinarios();
+    if (veterinarios.some(v => v.matricula === veterinario.matricula)) {
       throw new Error('La matrícula ya existe');
     }
-    veterinario._id = this.currentId++;
-    this.veterinarios.push(veterinario);
+    veterinario.id =
+      veterinarios.length <= 0
+        ? 1
+        : veterinarios[veterinarios.length - 1].id + 1;
+    veterinarios.push(veterinario);
     return veterinario;
-  }
+  };
 
-  async putVeterinario(id, update) {
-    // Validar que la matrícula no esté repetida (excepto para el mismo veterinario)
-    const idx = this.veterinarios.findIndex(v => v._id == id);
-    if (idx !== -1) {
+  putVeterinario = async (id, update) => {
+    const veterinarios = await this.getVeterinarios();
+    const index = veterinarios.findIndex(v => v.id == id);
+    if (index >= 0) {
       if (
         update.matricula &&
-        this.veterinarios.some(
-          v => v.matricula === update.matricula && v._id != id
-        )
+        veterinarios.some(v => v.matricula === update.matricula && v.id != id)
       ) {
         throw new Error('La matrícula ya existe');
       }
-      this.veterinarios[idx] = { ...update, _id: this.veterinarios[idx]._id };
-      return this.veterinarios[idx];
+      update.id = Number(id);
+      veterinarios.splice(index, 1, update);
+      return update;
+    } else {
+      return 'Ocurrió un error al realizar la operación PUT.';
     }
-    return null;
-  }
+  };
 
-  async patchVeterinario(id, update) {
-    const idx = this.veterinarios.findIndex(v => v._id == id);
-    if (idx !== -1) {
+  patchVeterinario = async (id, update) => {
+    const veterinarios = await this.getVeterinarios();
+    const index = veterinarios.findIndex(v => v.id == id);
+    if (index >= 0) {
       if (
         update.matricula &&
-        this.veterinarios.some(
-          v => v.matricula === update.matricula && v._id != id
-        )
+        veterinarios.some(v => v.matricula === update.matricula && v.id != id)
       ) {
         throw new Error('La matrícula ya existe');
       }
-      this.veterinarios[idx] = { ...this.veterinarios[idx], ...update };
-      return this.veterinarios[idx];
+      const newVeterinario = { ...veterinarios[index], ...update, id: Number(id) };
+      veterinarios.splice(index, 1, newVeterinario);
+      return newVeterinario;
+    } else {
+      return 'Ocurrió un error al realizar la operación PATCH.';
     }
-    return null;
-  }
+  };
 
-  async deleteVeterinario(id) {
-    const idx = this.veterinarios.findIndex(v => v._id == id);
-    if (idx !== -1) {
-      const deleted = this.veterinarios.splice(idx, 1);
-      return deleted[0];
+  deleteVeterinario = async id => {
+    const veterinarios = await this.getVeterinarios();
+    const index = veterinarios.findIndex(v => v.id == id);
+    if (index >= 0) {
+      veterinarios.splice(index, 1);
+      return 'El elemento fue borrado.';
+    } else {
+      return 'Ocurrió un error.';
     }
-    return null;
-  }
+  };
 }
 
 export default VeterinarioModelMemory;
