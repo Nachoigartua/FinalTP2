@@ -13,15 +13,17 @@ API REST para gestionar animales y veterinarios, con persistencia en memoria, ar
 2. Configura `.env` (ejemplo):
    ```env
    PORT=8080
-   PERSISTENCE=memory   # memory | fs | mongo
-   MONGO_URL=mongodb+srv://nacho:nacho@cluster0.cvbkjim.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+   PERSISTENCE= memory | fs | mongo
+   MONGO_URL= (adjuntada en otro lado, por seguridad)
    MONGO_DB_NAME=tp2
    SECRETKEY=admin
    ```
 3. Inicia el servidor:
    ```bash
-   npm start
+   npm run watch
    ```
+4. Para testear:
+   npm test
 
 ## Endpoints principales
 - **GenerarToken:**
@@ -47,5 +49,5 @@ API REST para gestionar animales y veterinarios, con persistencia en memoria, ar
 - Para archivos, se crean automáticamente (`animales.txt`, `veterinarios.txt`).
 
 ---
-Autor: Ignacio Igartua, Meital Srougo, Patricio Baez, Manuel Dubovis
+Autor: Ignacio Igartua, Meital Srougo, Patricio Baez, Manuel Dubovis, Agustin Peñalba
 
