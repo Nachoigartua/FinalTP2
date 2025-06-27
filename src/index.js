@@ -3,6 +3,7 @@ import AnimalRouter from "./routes/AnimalRoutes.js";
 import VeterinarioRouter from "./routes/VeterinarioRoutes.js";
 import dotenv from "dotenv";
 import MongoConnection from "./models/MongoConnection.js";
+import LoginRouter from "./routes/LoginRoutes.js";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ console.log("Persistencia seleccionada:", persistencia);
 
     app.use("/api", new AnimalRouter().startRoutes());
     app.use("/api", new VeterinarioRouter().startRoutes());
+    app.use("/api", new LoginRouter().startRoutes());
 
     app.use((req, res) => {
       res.status(404).json({

@@ -14,8 +14,9 @@ API REST para gestionar animales y veterinarios, con persistencia en memoria, ar
    ```env
    PORT=8080
    PERSISTENCE=memory   # memory | fs | mongo
-MONGO_URL=mongodb+srv://nacho:nacho@cluster0.cvbkjim.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+   MONGO_URL=mongodb+srv://nacho:nacho@cluster0.cvbkjim.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
    MONGO_DB_NAME=tp2
+   SECRETKEY=admin
    ```
 3. Inicia el servidor:
    ```bash
@@ -23,18 +24,20 @@ MONGO_URL=mongodb+srv://nacho:nacho@cluster0.cvbkjim.mongodb.net/?retryWrites=tr
    ```
 
 ## Endpoints principales
+- **GenerarToken:**
+  - `GET    /api/animales`         → Generar Token y copiar por consola (expira en 5 minutos)
 - **Animales:**
   - `GET    /api/animales`         → Lista todos
-  - `POST   /api/animales`         → Crea uno (body: nombre, especie, edad, estado)
+  - `POST   /api/animales`         → Crea uno (body: nombre, especie, edad, estado) *(requiere Token)*
   - `PUT    /api/animales/:id`     → Reemplaza por ID
   - `PATCH  /api/animales/:id`     → Modifica por ID
-  - `DELETE /api/animales/:id`     → Elimina por ID
+  - `DELETE /api/animales/:id`     → Elimina por ID *(requiere Token)*
 - **Veterinarios:**
   - `GET    /api/veterinarios`
-  - `POST   /api/veterinarios`     (body: nombre, matricula, especialidad)
+  - `POST   /api/veterinarios`     (body: nombre, matricula, especialidad) *(requiere Token)*
   - `PUT    /api/veterinarios/:id`
   - `PATCH  /api/veterinarios/:id`
-  - `DELETE /api/veterinarios/:id`
+  - `DELETE /api/veterinarios/:id` *(requiere Token)*
 
 - Respuestas de error: `{ error: "mensaje" }`
 
