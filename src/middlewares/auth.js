@@ -1,33 +1,28 @@
-import jwt from 'jsonwebtoken';
-import fs from 'fs';
+import jwt from "jsonwebtoken";
 
-const tokenPath = "tuToken.txt";
+const SECRETKEY = "clave_secreta";
 
 const generateToken = async (data) => {
     const payload = {
-        credenciales: data.credenciales
-    }
-    // Se genera el token 
-    const token = await jwt.sign(payload, process.env.SECRETKEY, { expiresIn: '5m' });
-    
-    // Se guarda el token en un archivo para facil copiado (fines academicos)
-    await fs.promises.writeFile(tokenPath, token, "utf-8");
-
-    return token;
+        email: data.email,
+        password: data.password
+    };
+    const tkn = await jwt.sign(payload, SECRETKEY, { expiresIn: '5m'});
+    return tkn;
 };
 
-const verifyToken = async (req,res,next) => {
-    // Se verifica el token
-    const token = req.headers.authorization;
-    if (!token) {
-        return res.status(401).json({ error: "Token no proporcionado" });
+const verifyToken = async (req, res, next) => {
+    const tkn = req.headers.authorization;
+    try {
+        const decoded = await jwt.verify(tkn, SECRETKEY);
+        if(!decoded) return res.status(401).json({message: "Token inválido."});
+        next();
+    } catch (err) {
+        return res.status(401).json({message: "Token inválido."});
     }
-    const decoded = await jwt.verify(token, process.env.SECRETKEY);
-
-    if(!decoded) {
-        return res.status(401).json({ error: "Token inválido o expirado" });
-    }
-    next();
 };
 
-export default { generateToken, verifyToken };
+export default {
+    generateToken,
+    verifyToken
+};

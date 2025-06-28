@@ -1,13 +1,14 @@
 import express from "express";
-import { login } from "../controllers/LoginController.js";
+import LoginController from "../controllers/LoginController.js";
 
 class LoginRouter {
   constructor() {
+    this.controller = new LoginController();
     this.router = express.Router();
   }
 
   startRoutes() {
-    this.router.post("/login", login);
+    this.router.post("/login", this.controller.login);
     return this.router;
   }
 }
