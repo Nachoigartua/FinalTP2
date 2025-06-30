@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node .",
     "watch": "node --watch .",
-    "test": "mocha src/test/Veterinario.integration.test.js" 
+    "test": "mocha src/test/Animal.integration.test.js" 
   },
   "repository": {
     "type": "module",

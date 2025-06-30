@@ -14,8 +14,9 @@ console.log("Persistencia seleccionada:", persistencia);
 
 (async () => {
   try {
-    await MongoConnection.connection();
-    console.log("Conexión a MongoDB exitosa");
+    if (persistencia === "mongo") {
+      await MongoConnection.connection();
+    }
 
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
@@ -33,7 +34,10 @@ console.log("Persistencia seleccionada:", persistencia);
 
     app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
   } catch (err) {
-    console.error("Error al conectar a MongoDB:", err);
-    process.exit(1);
+    if (persistencia === "mongo") {
+      console.error("Error al conectar a MongoDB:", err);
+    } else {
+      console.error("Error al iniciar la app:", err);
+    }
   }
 })();
