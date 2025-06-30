@@ -10,10 +10,10 @@ class VeterinarioRouter {
 
   startRoutes() {
     this.router.get("/veterinarios", this.controller.getVeterinarios);
-    this.router.post("/veterinarios", authMiddleware.verifyToken, this.controller.postVeterinario);
+    this.router.post("/veterinarios", this.controller.postVeterinario);
     this.router.patch("/veterinarios/:id", this.controller.patchVeterinario);
     this.router.put("/veterinarios/:id", this.controller.putVeterinario);
-    this.router.delete("/veterinarios/:id", authMiddleware.verifyToken, this.controller.deleteVeterinario);
+    this.router.delete("/veterinarios/:id", this.controller.deleteVeterinario);
     return this.router;
   }
 }
