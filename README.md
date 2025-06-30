@@ -16,32 +16,29 @@ API REST para gestionar animales y veterinarios, con persistencia en memoria, ar
    PERSISTENCE= memory | fs | mongo
    MONGO_URL= (adjuntada en otro lado, por seguridad)
    MONGO_DB_NAME=tp2
-   SECRETKEY=admin
    ```
 3. Inicia el servidor:
-   ```bash
    npm run watch
    ```
-4. Para testear:
+4. Para testear, podes cambiar en el package json , en el campo test, a Animales o Veterinarios, y ejecutar
    npm test
 
 ## Endpoints principales
-- **GenerarToken:**
-  - `GET    /api/animales`         → Generar Token y copiar por consola (expira en 5 minutos)
-- **Animales:**
+- **Login para generar token:**
+  - `POST    /api/login`         → Generar Token y copiar por consola (expira en 5 minutos)
+- **Animales:** (requiere Token)
   - `GET    /api/animales`         → Lista todos
-  - `POST   /api/animales`         → Crea uno (body: nombre, especie, edad, estado) *(requiere Token)*
+  - `POST   /api/animales`         → Crea uno (body: nombre, especie, edad, estado) 
   - `PUT    /api/animales/:id`     → Reemplaza por ID
   - `PATCH  /api/animales/:id`     → Modifica por ID
   - `DELETE /api/animales/:id`     → Elimina por ID *(requiere Token)*
-- **Veterinarios:**
+- **Veterinarios:** (no requiere token)
   - `GET    /api/veterinarios`
-  - `POST   /api/veterinarios`     (body: nombre, matricula, especialidad) *(requiere Token)*
+  - `POST   /api/veterinarios`     (body: nombre, matricula, especialidad) 
   - `PUT    /api/veterinarios/:id`
   - `PATCH  /api/veterinarios/:id`
-  - `DELETE /api/veterinarios/:id` *(requiere Token)*
+  - `DELETE /api/veterinarios/:id` 
 
-- Respuestas de error: `{ error: "mensaje" }`
 
 ## Persistencia
 - Cambia el modo en `.env` con `PERSISTENCE=memory|fs|mongo`.
