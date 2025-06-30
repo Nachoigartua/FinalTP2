@@ -6,21 +6,20 @@ API REST para gestionar animales y veterinarios, con persistencia en memoria, ar
 ## Instalación y uso rápido
 1. Clona el repo e instala dependencias:
    ```bash
-   git clone https://github.com/Nachoigartua/FinalTP2.git
    cd FinalTP2
    npm install
    ```
-2. Configura `.env` (ejemplo):
+2. Configura `.env` (datos del .env adjuntados en txt del zip):
    ```env
-   PORT=8080
-   PERSISTENCE= memory | fs | mongo
-   MONGO_URL= (adjuntada en otro lado, por seguridad)
-   MONGO_DB_NAME=tp2
+   PORT=
+   PERSISTENCE= 
+   MONGO_URL= 
+   MONGO_DB_NAME=
    ```
 3. Inicia el servidor:
    npm run watch
    ```
-4. Para testear, podes cambiar en el package json , en el campo test, a Animales o Veterinarios, y ejecutar
+4. Para testear, en el package json cambiar a Animal.integration.test.js para ver animales y ejecutar
    npm test
 
 ## Endpoints principales

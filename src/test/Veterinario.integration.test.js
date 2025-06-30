@@ -14,7 +14,6 @@ describe("Test entidad VETERINARIOS ", () => {
         const response = await url.post("/api/veterinarios").send({
             nombre: "Dr. House1",
             especialidad: "General",
-            //en este caso tiraria error ya que la matricula ya existe, se deja asi para que haya un caso de error
             matricula: "12345"
         })
         expect(response.status).to.equal(200)
